@@ -34,13 +34,17 @@ export function Step4Clients() {
   const [defaultAllowedIps, setDefaultAllowedIps] = useState("0.0.0.0/0");
   const [generating, setGenerating] = useState(false);
 
-  // Auto-generar clientes en la primera visita si está vacío
+  // Auto-generar clientes si está vacío o si la subred cambió respecto a los clientes existentes
   useEffect(() => {
-    if (clients.length === 0 && network.clientCount > 0) {
+    const networkBase = ipBase(network.clientStartIp);
+    const subnetChanged =
+      clients.length > 0 && ipBase(clients[0].ip) !== networkBase;
+
+    if ((clients.length === 0 && network.clientCount > 0) || subnetChanged) {
       generateClients();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [network.clientStartIp, network.subnet, network.clientCount]);
 
   const generateClients = async () => {
     setGenerating(true);
