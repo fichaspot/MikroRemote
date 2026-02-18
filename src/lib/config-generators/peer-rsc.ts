@@ -12,9 +12,29 @@ export function generatePeerRsc(
   lines.push(``);
 
   for (const client of clients) {
+    const allowedAddress = [
+      `${client.ip}/32`,
+      ...(client.lanSegments ?? []),
+    ].join(",");
     lines.push(
-      `/interface/wireguard/peers/add interface=${server.interfaceName} public-key="${client.keys.publicKey}" preshared-key="${client.psk}" allowed-address=${client.ip}/32 comment="${client.name}"`
+      `/interface/wireguard/peers/add interface=${server.interfaceName} public-key="${client.keys.publicKey}" preshared-key="${client.psk}" allowed-address=${allowedAddress} comment="${client.name}"`
     );
+  }
+
+  // Static routes for LAN segments
+  const clientsWithSegments = clients.filter(
+    (c) => c.lanSegments && c.lanSegments.length > 0
+  );
+  if (clientsWithSegments.length > 0) {
+    lines.push(``);
+    lines.push(`# --- Static Routes for LAN Segments ---`);
+    for (const client of clientsWithSegments) {
+      for (const segment of client.lanSegments!) {
+        lines.push(
+          `/ip/route/add dst-address=${segment} gateway=${client.ip} comment="${client.name} LAN"`
+        );
+      }
+    }
   }
 
   return lines.join("\n");

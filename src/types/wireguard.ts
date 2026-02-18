@@ -27,6 +27,7 @@ export interface WgClientConfig {
   allowedIps: string;
   endpoint: string;
   keepalive: number;
+  lanSegments?: string[];
 }
 
 export interface WgServerKeys {

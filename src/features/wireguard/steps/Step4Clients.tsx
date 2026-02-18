@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { RefreshCw, Plus } from "lucide-react";
+import { RefreshCw, Plus, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -188,6 +188,17 @@ export function Step4Clients() {
           </Button>
         </CardContent>
       </Card>
+
+      {/* Tip Segmentos LAN */}
+      <div className="flex items-start gap-2 text-xs text-muted-foreground bg-muted/30 border border-border rounded-lg px-4 py-3">
+        <span className="text-primary mt-0.5">&#9432;</span>
+        <p>
+          Si un cliente es un router MikroTik con redes LAN detrás, puedes agregar sus segmentos de red
+          desde el botón de editar (<Pencil className="inline w-3 h-3 align-text-top" />) de cada cliente.
+          Los segmentos se incluirán en <code className="text-primary/80">allowed-address</code> del peer
+          y se generarán rutas estáticas en el script del servidor.
+        </p>
+      </div>
 
       {/* Acciones */}
       <div className="flex items-center gap-2">
