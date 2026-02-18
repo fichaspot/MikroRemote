@@ -9,10 +9,16 @@ import {
   Settings,
   Sun,
   Moon,
+  Minus,
+  Square,
+  X,
 } from "lucide-react";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { cn } from "@/lib/utils";
 import { Tooltip } from "@/components/ui/tooltip";
 import { useAppStore } from "@/stores/app-store";
+
+const appWindow = getCurrentWindow();
 
 const navItems = [
   { label: "Inicio", icon: LayoutDashboard, path: "/", disabled: false },
@@ -28,7 +34,7 @@ export function TopNav() {
   const { theme, toggleTheme } = useAppStore();
 
   return (
-    <header className="h-12 border-b border-border bg-sidebar-background shrink-0 flex items-center px-5 gap-6">
+    <header data-tauri-drag-region className="h-12 border-b border-border bg-sidebar-background shrink-0 flex items-center px-5 gap-6 select-none">
       {/* Logo */}
       <NavLink to="/" className="flex items-center gap-2.5 shrink-0 mr-2">
         <div className="w-6 h-6 bg-primary rounded-sm flex items-center justify-center">
@@ -95,6 +101,31 @@ export function TopNav() {
         <span className="text-[10px] font-mono text-muted-foreground/50 uppercase tracking-widest">
           v0.2
         </span>
+      </div>
+
+      {/* Window controls */}
+      <div className="shrink-0 flex items-center -mr-5">
+        <button
+          onClick={() => appWindow.minimize()}
+          className="titlebar-btn h-12 w-11 inline-flex items-center justify-center text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
+          aria-label="Minimizar"
+        >
+          <Minus className="w-3.5 h-3.5" />
+        </button>
+        <button
+          onClick={() => appWindow.toggleMaximize()}
+          className="titlebar-btn h-12 w-11 inline-flex items-center justify-center text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
+          aria-label="Maximizar"
+        >
+          <Square className="w-3 h-3" />
+        </button>
+        <button
+          onClick={() => appWindow.close()}
+          className="titlebar-btn h-12 w-11 inline-flex items-center justify-center text-muted-foreground hover:bg-[#CF132B] hover:text-white transition-colors"
+          aria-label="Cerrar"
+        >
+          <X className="w-3.5 h-3.5" />
+        </button>
       </div>
     </header>
   );
