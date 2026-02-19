@@ -6,6 +6,7 @@ import { WireGuardPage } from "@/features/wireguard/WireGuardPage";
 import { ProfilesPage } from "@/features/profiles/ProfilesPage";
 import { RoutersPage } from "@/features/routers/RoutersPage";
 import { ChrDeployPage } from "@/features/chr-deploy/ChrDeployPage";
+import { SettingsPage } from "@/features/settings/SettingsPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/profiles" element={<ProfilesPage />} />
           <Route path="/routers" element={<RoutersPage />} />
           <Route path="/chr-deploy" element={<ChrDeployPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Routes>
       <Toaster theme="dark" richColors position="bottom-right" />

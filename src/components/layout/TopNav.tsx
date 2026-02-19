@@ -27,7 +27,7 @@ const navItems = [
   { label: "Routers", icon: Server, path: "/routers", disabled: false },
   { label: "CHR Deploy", icon: Cloud, path: "/chr-deploy", disabled: false },
   { label: "Perfiles", icon: FolderOpen, path: "/profiles", disabled: false },
-  { label: "Ajustes", icon: Settings, path: "/settings", disabled: true },
+  { label: "Ajustes", icon: Settings, path: "/settings", disabled: false },
 ];
 
 export function TopNav() {
